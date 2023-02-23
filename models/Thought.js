@@ -1,6 +1,7 @@
 // *****Import Modules*****
 const { Schema, model } = require('mongoose');
 
+// Model Schema
 const thoughtSchema = new Schema(
   {
     thoughtText: {
@@ -16,6 +17,7 @@ const thoughtSchema = new Schema(
   }
 )
 
-
+// Initialize model
+const Thought = model('thought', thoughtSchema);
 
 module.exports = Thought;
