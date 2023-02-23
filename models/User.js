@@ -1,6 +1,7 @@
 // *****Import Modules*****
 const { Schema, model } = require('mongoose');
 
+// Model Schema
 const userSchema = new Schema(
   {
     username: {
@@ -42,6 +43,7 @@ userSchema.virtual('friendCount')
     return `${this.friends.length}`;
   });
 
-
+// Initialize model
+const User = model('user', userSchema);
 
 module.exports = User;
