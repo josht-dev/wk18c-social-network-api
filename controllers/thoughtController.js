@@ -1,5 +1,5 @@
 // *****Import Modules*****
-const Thought = require('../models/Thought');
+const { Thought, User } = require('../models');
 
 module.exports = {
   // ***** Route - /api/thoughts *****
