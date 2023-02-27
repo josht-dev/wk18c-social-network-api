@@ -38,7 +38,7 @@ To add a screenshot, create an `assets/images` folder in your repository and upl
 ## Credits
 
 Used the following site to generate database seed data text content: https://loremipsum.io/
-Used seed data names from the following repo: https://du.bootcampcontent.com/denver-coding-bootcamp/DU-VIRT-FSF-PT-10-2022-U-LOLC/-/blob/main/18-NoSQL/01-Activities/25-Ins_CRUD-Subdoc/utils/data.js
+Seed data user name pool generated from the following website: https://jimpix.co.uk/words/random-username-generator.asp
 
 ## License
 
