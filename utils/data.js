@@ -1,60 +1,6 @@
 // Pool of user name strings to pull from, generated from https://jimpix.co.uk/words/random-username-generator.asp
-const namePool = [
-  'Aaran',
-  'Aaren',
-  'Aarez',
-  'Aarman',
-  'Aaron',
-  'Aaron-James',
-  'Aarron',
-  'Aaryan',
-  'Aaryn',
-  'Aayan',
-  'Aazaan',
-  'Abaan',
-  'Abbas',
-  'Abdallah',
-  'Abdalroof',
-  'Abdihakim',
-  'Abdirahman',
-  'Abdisalam',
-  'Abdul',
-  'Abdul-Aziz',
-  'Abdulbasir',
-  'Abdulkadir',
-  'Abdulkarem',
-  'Ze',
-  'Zechariah',
-  'Zeek',
-  'Zeeshan',
-  'Zeid',
-  'Zein',
-  'Zen',
-  'Zendel',
-  'Zenith',
-  'Zennon',
-  'Zeph',
-  'Zerah',
-  'Zhen',
-  'Zhi',
-  'Zhong',
-  'Zhuo',
-  'Zi',
-  'Zidane',
-  'Zijie',
-  'Zinedine',
-  'Zion',
-  'Zishan',
-  'Ziya',
-  'Ziyaan',
-  'Zohaib',
-  'Zohair',
-  'Zoubaeir',
-  'Zubair',
-  'Zubayr',
-  'Zuriel',
-];
-
-// Pool of thought strings to pull from
-
-// Pool of reaction strings to pull from
+const namePool = [];
+// Pool of thought strings to pull from, generated from https://loremipsum.io/
+const thoughtPool = [];
+// Pool of reaction strings to pull from, generated from https://loremipsum.io/
+const reactionPool = [];
