@@ -108,3 +108,32 @@ const reactionPool = [
   'volutpat diam ut venenatis tellus',
   'convallis convallis tellus id interdum'
 ];
+
+// Generate an user object to be seeded into the db
+const generateUserObj = () => {
+  const name = namePool[Math.floor(Math.random() * namePool.length)];
+  const useremail = `${name}@gmail.com`;
+  return {username: name, email: useremail};
+}
+
+/* Generate a reaction to be added to a thought obj,
+  takes a username parameter */
+const generateReactionObj = (name) => {
+  /* Each object needs the following keys
+    reactionBody, username
+   */
+  const text = reactionPool[Math.floor(Math.random() * reactionPool.length)];
+  return {reactionBody: text, username: name};
+}
+
+/* Generate a thought object to be seeded into the db,
+  takes a username parameter*/
+const generateThoughtObj = (name) => {
+  /* Each object needs the following keys
+    thoughtText, username, reactions
+  */
+  const text = thoughtPool[Math.floor(Math.random() * thoughtPool.length)];
+  return {thoughtText: text, username: name};
+}
+
+module.exports = { generateUserObj, generateThoughtObj, generateReactionObj };
