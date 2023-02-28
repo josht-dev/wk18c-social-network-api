@@ -23,8 +23,9 @@ connection.once('open', async() => {
   // Array of 10 unique user objs
   let counter = 0;
   do {
-    let newUser = generateUserObj;
-    if (!users.includes((user) => {return user.username === newUser.username})) {
+    let newUser = generateUserObj();
+    let noDuplicate = (!users.some(user => {return user.username === newUser.username})) ? true : false;
+    if (noDuplicate) {
       counter++;
       users.push(newUser);
     }
@@ -64,12 +65,14 @@ connection.once('open', async() => {
     for (let i = 0; i <= randomNum; i++) {
       // Generate thoughts for user
       let newThought = generateThoughtObj(user.username);
+      newThought.reactions = [];
 
       // Generate responses for thought
       let randNum = Math.floor(Math.random() * 3);
       for (let i = 0; i <= randNum; i++) {
         let userIndex = Math.floor(Math.random() * users.length);
         let response = generateReactionObj(users[userIndex].username);
+        
         newThought.reactions.push(response);
       }
 
