@@ -86,6 +86,16 @@ connection.once('open', async() => {
   await Thought.insertMany(thoughts);
 
   // Updated users with thought id's
+  users.forEach(user => {
+    // Get random number of friends
+    let randomNum = Math.floor(Math.random() * 3);
+    // Store current friends to check for duplicates
+    let friends = [];
+
+
+
+
+  });
 
   // Update users with friend id's
 
