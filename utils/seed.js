@@ -81,7 +81,7 @@ connection.once('open', async() => {
     }
   });
 
-  // Add thoughts and friends to db
+  // Add thoughts and users to db
   await User.insertMany(users);
   await Thought.insertMany(thoughts);
 
