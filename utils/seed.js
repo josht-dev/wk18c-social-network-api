@@ -2,7 +2,11 @@
 const connection = require('../config/connection');
 const { User, Thought } = require('../models');
 // Not user if I will need functions from data.js
-//const {} = require('./data');
+const { 
+  generateUserObj, 
+  generateThoughtObj, 
+  generateReactionObj 
+} = require('./data');
 
 // Connection validation
 connection.on('error', (err) => err);
@@ -13,6 +17,22 @@ connection.once('open', async() => {
   await Thought.deleteMany({});
   await User.deleteMany({});
 
+  const users = [];
+  const thoughts = [];
+  let counter = 0;
+
+  // Array of 10 unique user objs
+  do {
+    let newUser = generateUserObj;
+    if (!users.includes((user) => {return user.username === newUser.username})) {
+      counter++;
+      users.push(newUser);
+    }
+    
+  } while (counter <= 10);
+  // Array of thought objs
+
+  // Array of reaction objs
 
 
   console.info('Database successfully seeded!');
