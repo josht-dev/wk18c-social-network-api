@@ -19,22 +19,80 @@ connection.once('open', async() => {
 
   const users = [];
   const thoughts = [];
-  let counter = 0;
 
   // Array of 10 unique user objs
+  let counter = 0;
   do {
     let newUser = generateUserObj;
     if (!users.includes((user) => {return user.username === newUser.username})) {
       counter++;
       users.push(newUser);
     }
-    
-  } while (counter <= 10);
-  // Array of thought objs
+  } while (counter <= 15);
 
-  // Array of reaction objs
+  // Added user friends
+  /* Need to add friends after db insert...
+  users.forEach((user, index) => {
+    // Get random number of friends
+    let randomNum = Math.floor(Math.random() * 3);
+    // Store current friends to check for duplicates
+    let friends = [];
+    // Loop to add each friend
+    for (let i = 0; i <= randomNum; i++) {
+      // Get random user index for friend
+      let randIndex = Math.floor(Math.random() * users.length);
+      // Check for user being their own friend
+      if (randIndex === index) {
+        if (index === 0 || index !== users.length) {
+          randIndex++;
+        } else {
+          randIndex--;
+        }
+      }
+      // 
+      let getFriend = users[];
+    }
+  });
+  */
 
+  // Array of thought objs for each user
+  users.forEach((user, index) => {
+    // Random number of thoughts
+    let randomNum = Math.floor(Math.random() * 3);
 
+    // Loop random number of times generating thoughts
+    for (let i = 0; i <= randomNum; i++) {
+      // Generate thoughts for user
+      let newThought = generateThoughtObj(user.username);
+
+      // Generate responses for thought
+      let randNum = Math.floor(Math.random() * 3);
+      for (let i = 0; i <= randNum; i++) {
+        let userIndex = Math.floor(Math.random() * users.length);
+        let response = generateReactionObj(users[userIndex].username);
+        newThought.reactions.push(response);
+      }
+
+      // Push newThought to thoughts array
+      thoughts.push(newThought);
+    }
+  });
+
+  // Add thoughts and friends to db
+  await User.collection.insertMany(users);
+  await Thought.collection.insertMany(thoughts);
+
+  // Updated users with thought id's
+
+  // Update users with friend id's
+
+  console.table(users);
+  console.table(thoughts);
   console.info('Database successfully seeded!');
   process.exit(0);
 });
+
+
+/* TODO - Find out if reactions to thoughts are intended to be restricted to friends only;
+  if so, add filter/validation code
+*/
