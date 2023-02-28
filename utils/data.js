@@ -123,7 +123,7 @@ const generateReactionObj = (name) => {
     reactionBody, username
    */
   const text = reactionPool[Math.floor(Math.random() * reactionPool.length)];
-  return {reactionBody: text, username: name};
+  return {reactionBody: text, username: name, thoughts: [], friends: [] };
 }
 
 /* Generate a thought object to be seeded into the db,
