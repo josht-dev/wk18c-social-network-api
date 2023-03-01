@@ -3,21 +3,21 @@ const { User, Thought } = require('../models');
 
 module.exports = {
   // *****Route - /api/users *****
-  // TODO - Get all users
+  // Get all users
   getUsers(req, res) {
     User.find()
     .select('-__v')
     .then((users) => res.json(users))
     .catch((err) => res.status(500).json(err));
   },
-  // TODO -Post/create a new user
+  // Post/create a new user
   createUser(req, res) {
     User.create(req.body)
       .then((user) => res.json(user))
       .catch((err) => res.status(500).json(err));
   },
   // ***** Route - /api/users/:userId *****
-  /* TODO - Get a single user by its _id,
+  /* Get a single user by its _id,
     populate thought and friend data */
   getOneUser(req, res) {
     User.findOne({ _id: req.params.userId })
@@ -29,7 +29,7 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  // TODO - Put/update a user by its _id
+  // Put/update a user by its _id
   updateUser(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },
@@ -46,8 +46,8 @@ module.exports = {
         res.status(500).json(err);
       });
   },
-  // TODO - Delete a user by its _id
-  // TODO - BONUS - Remove user's associated thoughts when deleted
+  // Delete a user by its _id
+  // BONUS - Remove user's associated thoughts when deleted
   deleteUser(req, res) {
     User.findOneAndDelete({ _id: req.params.userId })
       .then((user) =>
@@ -59,11 +59,11 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
   // ***** Route - /api/users/:userId/friends/:friendId *****
-  // TODO - Post/create to add a new friend to user's friend list
+  // Post/create to add a new friend to user's friend list
   createFriend(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },
-      { $addToSet: { tags: req.body } },
+      { $addToSet: { friends: req.params.friendId } },
       { runValidators: true, new: true }
     )
       .then((user) =>
