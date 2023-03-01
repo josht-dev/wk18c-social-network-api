@@ -7,31 +7,33 @@
 
 ## Description
 
-Provide a short description explaining the what, why, and how of your project. Use the following questions as a guide:
-
-- What was your motivation?
-- Why did you build this project? (Note: the answer is not "Because it was a homework assignment.")
-- What problem does it solve?
-- What did you learn?
-
-## Table of Contents (Optional)
-
-If your README is long, add a table of contents to make it easy for users to find what they need.
-
-- [Installation](#installation)
-- [Usage](#usage)
-- [Credits](#credits)
-- [License](#license)
+This is the backend of a social-network API. It uses mongoDB and mongoose to manage user data. It has functionality to view all, view one, update, and create users and thoughts. It also allows for the adding or removing friends and reactions. When a user is deleted, all associated thoughts are also deleted.
 
 ## Installation
 
-What are the steps required to install your project? Provide a step-by-step description of how to get the development environment running.
+The following installation steps below can be used to use the application.
+
+- Install MySQL and NodeJS for your OS version
+    - Configure MySQL
+- Clone the repository to her local machine
+- Open a terminal to the root of the cloned repo
+- Run the following command in the terminal: $ npm i
+- Run the following commands in the terminal:
+    - $ npm run seed
+    - $ node server
 
 ## Usage
 
-Provide instructions and examples for use. Include screenshots as needed.
+In order to use the backend to view, add, and remove items, use the following paths:
+- '/api/users'
+- '/api/users/:userId'
+- '/api/users/:userId/friends'
+- '/api/users/:userId/friends/friendsId'
+- '/api/thoughts'
+- '/api/thoughts/:thoughtId'
+- '/api/thoughts/:thoughtId/reactions/:reactionId'
 
-To add a screenshot, create an `assets/images` folder in your repository and upload your screenshot to it. Then, using the relative filepath, add it to your README using the following syntax:
+Here is a video walkthrough: https://drive.google.com/file/d/17hqGQHsE5Yc_gU0E0cHnZwJrRz_yAOD6/view
 
 ![screenshot](./assets/screenshot.png)
 
