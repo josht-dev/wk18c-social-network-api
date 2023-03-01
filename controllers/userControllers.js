@@ -60,7 +60,19 @@ module.exports = {
   },
   // ***** Route - /api/users/:userId/friends/:friendId *****
   // TODO - Post/create to add a new friend to user's friend list
-  createFriend(req, res) {},
+  createFriend(req, res) {
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $addToSet: { tags: req.body } },
+      { runValidators: true, new: true }
+    )
+      .then((user) =>
+        !user
+          ? res.status(404).json({ message: 'This user could not be found!' })
+          : res.json(user)
+      )
+      .catch((err) => res.status(500).json(err));
+  },
   // TODO - Delete friend from user's friend list
   deleteFriend(req, res) {}
 }
