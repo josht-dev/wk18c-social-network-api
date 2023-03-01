@@ -30,7 +30,22 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
   // TODO - Put/update a though by its _id
-  updateThought(req, res) {},
+  updateThought(req, res) {
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $set: req.body },
+      { runValidators: true, new: true }
+    )
+      .then((thought) =>
+        !thought
+          ? res.status(404).json({ message: 'Could not find your thought!' })
+          : res.json(thought)
+      )
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  },
   // TODO - Delete a thought by its _id
   deleteThought(req, res) {
     Thought.findOneAndRemove({ _id: req.params.thoughtId })

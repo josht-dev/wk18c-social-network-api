@@ -30,7 +30,22 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
   // TODO - Put/update a user by its _id
-  updateUser(req, res) {},
+  updateUser(req, res) {
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $set: req.body },
+      { runValidators: true, new: true }
+    )
+      .then((user) =>
+        !user
+          ? res.status(404).json({ message: 'That user could not be found!' })
+          : res.json(user)
+      )
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  },
   // TODO - Delete a user by its _id
   // TODO - BONUS - Remove user's associated thoughts when deleted
   deleteUser(req, res) {
