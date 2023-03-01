@@ -1,5 +1,5 @@
 // *****Import Modules*****
-const User = require('../models/User');
+const { User, Thought } = require('../models');
 
 module.exports = {
   // *****Route - /api/users *****
@@ -38,7 +38,7 @@ module.exports = {
       .then((user) =>
         !user
           ? res.status(404).json({ message: 'That user could not be found!' })
-          : Application.deleteMany({ _id: { $in: user.applications } })
+          : Thought.deleteMany({ _id: { $in: user.thoughts } })
       )
       .then(() => res.json({ message: 'User and associated thoughts deleted!' }))
       .catch((err) => res.status(500).json(err));
