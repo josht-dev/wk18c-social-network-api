@@ -86,8 +86,32 @@ module.exports = {
   // ***** Route - /api/thoughts/:thoughtId/reactions *****
   /* TODO - Post/create a reaction,
     store in a single thought's reactions array field */
-  createReaction(req, res) {},
+  createReaction(req, res) {
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $addToSet: { reactions: req.body } },
+      { runValidators: true, new: true }
+    )
+      .then((thought) =>
+        !thought
+          ? res.status(404).json({ message: 'The thought was not found!' })
+          : res.json(thought)
+      )
+      .catch((err) => res.status(500).json(err));
+  },
     // ***** Route - /api/thoughts/:thoughtId/reactions/:reactionId *****
   // TODO - Delete a reaction by the reaction's reactionId
-  deleteReaction(req, res) {}
+  deleteReaction(req, res) {
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $pull: { reactions: {reactionId: req.params.reactionId} } },
+      { new: true }
+    )
+      .then((thought) => {
+        !thought
+          ? res.status(404).json({ message: 'This thought was not found!' })
+          : res.json(thought)
+      })
+      .catch((err) => res.status(500).json(err));
+  }
 }
