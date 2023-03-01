@@ -70,7 +70,6 @@ connection.once('open', async() => {
   const userDocs = await User.find();
   const thoughtDocs = await Thought.find();
 
-  // Updated users with friend and thought id's
   for (let x = 0; x <= users.length-1; x++) {
     // Get random number of friends
     let randomNum = Math.floor(Math.random() * 3);
@@ -96,14 +95,14 @@ connection.once('open', async() => {
     // Get friend id's to add to user db entry
     let friendIds = friends.map(friend => {
       let getDbObj = userDocs.find((user => { return user.username = friend }));
-      return getDbObj.id;
+      return getDbObj._id;
     });
 
     // Get thought id's to add to the user db entry
     let thoughtIds = [];
     thoughtDocs.forEach(thought => {
       if (thought.username === users[x].username) {
-        thoughtIds.push(thought.id);
+        thoughtIds.push(thought._id);
       }
     });
 
