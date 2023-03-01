@@ -1,6 +1,7 @@
 // *****Import Modules*****
 const connection = require('../config/connection');
 const { User, Thought } = require('../models');
+const { findOneAndUpdate } = require('../models/User');
 // Not user if I will need functions from data.js
 const { 
   generateUserObj, 
@@ -10,6 +11,13 @@ const {
 
 // Connection validation
 connection.on('error', (err) => err);
+
+// test
+/*
+async function updateUser(filter, update) {
+  await User.findOneAndUpdate(filter, update);
+}
+*/
 
 // db reset and seed
 connection.once('open', async() => {
@@ -31,36 +39,10 @@ connection.once('open', async() => {
     }
   } while (counter <= 15);
 
-  // Added user friends
-  /* Need to add friends after db insert...
-  users.forEach((user, index) => {
-    // Get random number of friends
-    let randomNum = Math.floor(Math.random() * 3);
-    // Store current friends to check for duplicates
-    let friends = [];
-    // Loop to add each friend
-    for (let i = 0; i <= randomNum; i++) {
-      // Get random user index for friend
-      let randIndex = Math.floor(Math.random() * users.length);
-      // Check for user being their own friend
-      if (randIndex === index) {
-        if (index === 0 || index !== users.length) {
-          randIndex++;
-        } else {
-          randIndex--;
-        }
-      }
-      // 
-      let getFriend = users[];
-    }
-  });
-  */
-
   // Array of thought objs for each user
   users.forEach((user, index) => {
     // Random number of thoughts
     let randomNum = Math.floor(Math.random() * 3);
-
     // Loop random number of times generating thoughts
     for (let i = 0; i <= randomNum; i++) {
       // Generate thoughts for user
@@ -85,19 +67,60 @@ connection.once('open', async() => {
   await User.insertMany(users);
   await Thought.insertMany(thoughts);
 
-  // Updated users with thought id's
-  users.forEach(user => {
+  const userDocs = await User.find();
+  const thoughtDocs = await Thought.find();
+
+  // Updated users with friend and thought id's
+  for (let x = 0; x <= users.length-1; x++) {
     // Get random number of friends
     let randomNum = Math.floor(Math.random() * 3);
-    // Store current friends to check for duplicates
+    // Store current friend usernames to check for duplicates
     let friends = [];
 
+    // Generate a random number of friends
+    for (let i = 0; i <= randomNum; i++) {
+      // Generate random friend index
+      let randomIndex = Math.floor(Math.random() * users.length);
+      let newFriend = users[randomIndex].username;
+      // Check for duplicate friends
+      let noDuplicate = !friends.includes(newFriend);
+      // Check for user in randomIndex
+      if (randomIndex === x || !noDuplicate) {
+        i--;
+        continue;
+      } else {
+        friends.push(newFriend);
+      }
+    }
 
+    // Get friend id's to add to user db entry
+    let friendIds = friends.map(friend => {
+      let getDbObj = userDocs.find((user => { return user.username = friend }));
+      return getDbObj.id;
+    });
 
+    // Get thought id's to add to the user db entry
+    let thoughtIds = [];
+    thoughtDocs.forEach(thought => {
+      if (thought.username === users[x].username) {
+        thoughtIds.push(thought.id);
+      }
+    });
 
-  });
+    // Update user db entry
+    let filter = { username: users[x].username };
+    let update = { friends: friendIds, thoughts: thoughtIds };
+    await User.findOneAndUpdate(filter, update);
+    //updateUser(filter, update);
 
-  // Update users with friend id's
+    /*
+    console.info('Friends: ');
+    console.info(friendIds);
+    console.info('Thoughts: ');
+    console.info(thoughtIds);
+    */
+
+  }
 
   console.table(users);
   console.table(thoughts);
