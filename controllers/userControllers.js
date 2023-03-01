@@ -73,7 +73,7 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  // TODO - Delete friend from user's friend list
+  // Delete friend from user's friend list
   deleteFriend(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },
